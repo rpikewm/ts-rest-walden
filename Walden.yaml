@@ -56,8 +56,7 @@ paths:
         '404':
           description: Not Found
       description: Updates User
-      security:
-        - auth0key: []
+      security: []
       requestBody:
         content:
           application/json:
@@ -79,8 +78,7 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-      security:
-        - auth0key: []
+      security: []
       tags:
         - Users
       description: Deactivate a user
@@ -457,13 +455,9 @@ components:
         totalcount:
           type: number
   securitySchemes:
-    auth0key:
-      type: oauth2
-      flows:
-        clientCredentials:
-          tokenUrl: ''
-          refreshUrl: ''
-          scopes: {}
+    Basic Auth:
+      type: http
+      scheme: basic
 tags:
   - name: Users
   - name: Enrollments
