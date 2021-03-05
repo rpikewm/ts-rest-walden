@@ -349,11 +349,65 @@ paths:
       operationId: get-institution-keycodes
       description: Lists keycodes.
   /custom/walden/Student/Enrollment/Program/Concentration:
-    get:
-      summary: Your GET endpoint
+    put:
+      summary: Upsert Enrollment by Program Concentration Mapping
       tags: []
-      responses: {}
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Can't Create Account:
+                  value:
+                    status: -4
+                    msg: Failed to create account
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Program Code Not defined:
+                  value:
+                    status: -5
+                    msg: 'Program Code is not defined: BS_ED_BAD'
+                Batch does not exist:
+                  value:
+                    status: -3
+                    msg: Active Superbatch doesn't exist for this OA
+                Program Code/Concentration Code Pair not defined:
+                  value:
+                    status: -6
+                    msg: 'Program Code/Concentration Code pair is not defined: GEN BS_ED_BAD'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Key code not specified:
+                  value:
+                    'status:-1': null
+                    msg: Key code not specified for Program Code BS_ED_BAD
+                'Key code not setup ':
+                  value:
+                    status: -2
+                    msg: 'Key code does not have a targeted node id, please ask Customer Service to fix in SA Green'
+                No Active Programs Available:
+                  value:
+                    status: -7
+                    msg: 'No active Taskstream Programs available, so account has not been activated'
       operationId: get-custom-walden-test
+      description: ''
     parameters: []
   '/users/email/{email}':
     parameters:
@@ -420,7 +474,7 @@ components:
       items:
         type: string
     Error:
-      title: Error
+      title: StatusResult
       type: object
       description: Represents a result either success or failure. id=1
       properties:
