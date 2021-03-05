@@ -1,0 +1,476 @@
+openapi: 3.0.0
+info:
+  title: Taskstream REST API
+  version: '1.0'
+  contact:
+    name: Robert Pike
+    url: 'https://tsrest.taskstream.com'
+    email: rpike@watermarkinsights.com
+  description: Manage Subscriptions
+servers:
+  - url: 'http://localhost:3000'
+    description: Robert Pike
+paths:
+  '/users/externalId/{external-id}':
+    parameters:
+      - schema:
+          type: string
+        name: external-id
+        in: path
+        required: true
+    get:
+      summary: User By External Id
+      tags:
+        - Users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                example-1:
+                  value:
+                    external_id: string
+                    first_name: string
+                    last_name: string
+                    email: string
+                    enrollment:
+                      - string
+                    demographics: {}
+      operationId: get-users-externalId-id
+      description: Gets a user based on External ID(This may be BannerID or whatever SIS)
+    post:
+      summary: Update User
+      operationId: post-users-externalId-external_id
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      description: Updates User
+      security:
+        - auth0key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      tags:
+        - Users
+    delete:
+      summary: Deactivate User
+      operationId: delete-users-externalId-external_id
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - auth0key: []
+      tags:
+        - Users
+      description: Deactivate a user
+    head:
+      summary: ''
+      operationId: head-users-externalId-external-id
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      description: determine if a user exists
+  '/users/externalId/{external-id}/enrollments':
+    parameters:
+      - schema:
+          type: string
+        name: external-id
+        in: path
+        required: true
+    get:
+      summary: User Enrollments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enrollment'
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-users-external_id-external_id
+      description: Gets User Enrollments
+      tags:
+        - Enrollments
+    put:
+      summary: Update User Enrollment
+      operationId: put-users-externalId-external_id-enrollments
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Enrollment'
+        description: ''
+      description: Adds enrollment(s)
+      tags:
+        - Users
+    delete:
+      summary: Remove Enrollment
+      operationId: delete-users-externalId-external_id-enrollments
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: Removes user Enrollments
+      tags:
+        - Enrollments
+  '/users/externalId/{studentid}/subscription':
+    get:
+      summary: Get User Subscription
+      tags:
+        - Users
+        - Subscriptions
+        - Institutions
+      responses:
+        '200':
+          description: Returns the keycode for the object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyCode'
+        '400':
+          description: Invalid Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: You need to authorize.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Account forbidden from performing this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Indicates no subscription found for the user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-users-externalId-external-id-subscription
+      description: Returns active Key Code for the user
+    delete:
+      summary: Remove Subscription
+      operationId: delete-users-externalId-external-id-subscription
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      description: Deletes a subscription associated with the end user.
+      tags:
+        - Subscriptions
+        - Users
+        - Institutions
+    post:
+      summary: Activate/Add Subscription
+      operationId: post-users-externalId-external-id-subscription
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KeyCode'
+        description: Keycode to associate with End User
+      description: Associates a keycode with an End User.
+      tags:
+        - Users
+        - Subscriptions
+        - Institutions
+    parameters:
+      - schema:
+          type: string
+        name: studentid
+        in: path
+        required: true
+  /institution/subscriptions:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Institutions
+        - Subscriptions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KeycodeUsage'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      operationId: get-institution-subscriptions
+      description: Lists all keycodes
+  /institution/keycodes:
+    get:
+      summary: Gets keycodes for the institution
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KeyCode'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      operationId: get-institution-keycodes
+      description: Lists keycodes.
+  /custom/walden/Student/Enrollment/Program/Concentration:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-custom-walden-test
+    parameters: []
+  '/users/email/{email}':
+    parameters:
+      - schema:
+          type: string
+        name: email
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      operationId: get-users-email-email
+    head:
+      summary: Check if a User Exists by email
+      operationId: head-users-email-email
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: User Model
+      properties:
+        external_id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        enrollment:
+          $ref: '#/components/schemas/Enrollment'
+        demographics:
+          $ref: '#/components/schemas/Demographics'
+      required:
+        - external_id
+        - first_name
+        - last_name
+        - email
+    Demographics:
+      type: object
+      title: Demographic
+      description: 'Key Value Pairs of Demographic, Value'
+    Enrollment:
+      title: Enrollment
+      type: array
+      description: Pass in the Course Id as pulled in from the LMS
+      items:
+        type: string
+    Error:
+      title: Error
+      type: object
+      description: Represents a result either success or failure. id=1
+      properties:
+        status:
+          type: number
+        message:
+          type: string
+      required:
+        - status
+    KeyCode:
+      title: KeyCode
+      type: object
+      properties:
+        keycode:
+          type: string
+        expiration:
+          type: string
+      required:
+        - keycode
+    KeycodeUsage:
+      title: KeycodeUsage
+      type: object
+      properties:
+        keycode:
+          type: string
+        expires:
+          type: string
+        isactive:
+          type: boolean
+        usagecount:
+          type: integer
+        totalcount:
+          type: number
+  securitySchemes:
+    auth0key:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+tags:
+  - name: Users
+  - name: Enrollments
+  - name: Demographics
+  - name: institution
+  - name: subscription
+  - name: Subscriptions
+  - name: Institutions
+security:
+  - auth0key: []
