@@ -409,12 +409,24 @@ paths:
                     status: -7
                     msg: 'No active Taskstream Programs available, so account has not been activated'
       operationId: get-custom-walden-test
-      description: ''
+      description: Upsert Enrollment by Program Concentration Mapping
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UpsertEnrollment'
+            examples:
+              Examples of how the object should be formatted(Demographics is a free form key/value):
+                value:
+                  firstname: Jane
+                  lastname: Doe
+                  programcode: BS_ELED_UQ
+                  concentrationcode: GEN
+                  demographics:
+                    country: United States
+                    age: 32
+                    totalcredits: 12
+                    ispending: true
         description: Must contain json record for the upsertenrollment model.
     parameters: []
   '/users/email/{email}':
