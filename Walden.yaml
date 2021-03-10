@@ -351,7 +351,9 @@ paths:
   /custom/walden/Student/Enrollment/Program/Concentration:
     put:
       summary: Upsert Enrollment by Program Concentration Mapping
-      tags: []
+      tags:
+        - Custom
+        - Walden
       responses:
         '201':
           description: Created
@@ -408,6 +410,12 @@ paths:
                     msg: 'No active Taskstream Programs available, so account has not been activated'
       operationId: get-custom-walden-test
       description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertEnrollment'
+        description: Must contain json record for the upsertenrollment model.
     parameters: []
   '/users/email/{email}':
     parameters:
@@ -508,6 +516,27 @@ components:
           type: integer
         totalcount:
           type: number
+    UpsertEnrollment:
+      title: UpsertEnrollment
+      type: object
+      properties:
+        firstname:
+          type: string
+        lastname:
+          type: string
+        programcode:
+          type: string
+        concentrationcode:
+          type: string
+        demographics:
+          type: object
+      required:
+        - firstname
+        - lastname
+        - programcode
+        - concentrationcode
+        - demographics
+      description: 'Model containing firstname, lastname, programcode, concentrationcode, and a keyvaluepair representation of demographics as an object'
   securitySchemes:
     Basic Auth:
       type: http
