@@ -416,7 +416,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UpsertEnrollment'
             examples:
-              Examples of how the object should be formatted(Demographics is a free form key/value):
+              Valid Example(Fake Data):
                 value:
                   firstname: Jane
                   lastname: Doe
@@ -427,7 +427,10 @@ paths:
                     age: 32
                     totalcredits: 12
                     ispending: true
-        description: Must contain json record for the upsertenrollment model.
+        description: |-
+          Must contain json record for the upsertenrollment model.
+
+          Demographics is an object that is key/value, key/value value may be any non object type that is valid for JSON
     parameters: []
   '/users/email/{email}':
     parameters:
