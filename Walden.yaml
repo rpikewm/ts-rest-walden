@@ -352,7 +352,7 @@ paths:
       operationId: get-institution-keycodes
       description: Lists keycodes.
     parameters: []
-  /api/custom/walden/Student/Enrollment/Program/Concentration:
+  '/api/custom/walden/User/{externalId}/Enrollment/Program/Concentration':
     put:
       summary: Upsert Enrollment by Program Concentration Mapping
       tags:
@@ -435,7 +435,12 @@ paths:
           Must contain json record for the upsertenrollment model.
 
           Demographics is an object that is key/value, key/value value may be any non object type that is valid for JSON
-    parameters: []
+    parameters:
+      - schema:
+          type: string
+        name: externalId
+        in: path
+        required: true
   '/api/users/email/{email}':
     parameters:
       - schema:
