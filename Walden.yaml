@@ -348,7 +348,7 @@ paths:
           description: Not Found
       operationId: get-institution-keycodes
       description: Lists keycodes.
-  /custom/walden/Student/Enrollment/Program/Concentration:
+  /api/custom/walden/Student/Enrollment/Program/Concentration:
     put:
       summary: Upsert Enrollment by Program Concentration Mapping
       tags:
