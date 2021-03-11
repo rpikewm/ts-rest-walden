@@ -11,7 +11,7 @@ servers:
   - url: 'http://localhost:3000'
     description: Robert Pike
 paths:
-  '/users/externalId/{external-id}':
+  '/api/users/externalId/{external-id}':
     parameters:
       - schema:
           type: string
@@ -95,7 +95,7 @@ paths:
         '404':
           description: Not Found
       description: determine if a user exists
-  '/users/externalId/{external-id}/enrollments':
+  '/api/users/externalId/{external-id}/enrollments':
     parameters:
       - schema:
           type: string
@@ -212,7 +212,7 @@ paths:
       description: Removes user Enrollments
       tags:
         - Enrollments
-  '/users/externalId/{studentid}/subscription':
+  '/api/users/externalId/{studentid}/subscription':
     get:
       summary: Get User Subscription
       tags:
@@ -326,7 +326,7 @@ paths:
       operationId: get-institution-subscriptions
       description: Lists all keycodes
     parameters: []
-  /institution/keycodes:
+  /api/institution/keycodes:
     get:
       summary: Gets keycodes for the institution
       tags: []
@@ -349,6 +349,7 @@ paths:
           description: Not Found
       operationId: get-institution-keycodes
       description: Lists keycodes.
+    parameters: []
   /api/custom/walden/Student/Enrollment/Program/Concentration:
     put:
       summary: Upsert Enrollment by Program Concentration Mapping
@@ -433,7 +434,7 @@ paths:
 
           Demographics is an object that is key/value, key/value value may be any non object type that is valid for JSON
     parameters: []
-  '/users/email/{email}':
+  '/api/users/email/{email}':
     parameters:
       - schema:
           type: string
