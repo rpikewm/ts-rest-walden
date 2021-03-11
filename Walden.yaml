@@ -302,7 +302,7 @@ paths:
         name: studentid
         in: path
         required: true
-  /institution/subscriptions:
+  /api/institution/subscriptions:
     get:
       summary: Your GET endpoint
       tags:
@@ -325,6 +325,7 @@ paths:
           description: Forbidden
       operationId: get-institution-subscriptions
       description: Lists all keycodes
+    parameters: []
   /institution/keycodes:
     get:
       summary: Gets keycodes for the institution
