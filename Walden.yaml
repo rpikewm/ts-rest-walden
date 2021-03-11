@@ -431,6 +431,7 @@ paths:
                     age: 32
                     totalcredits: 12
                     ispending: true
+                  email: teststudent@dev.walden.edu
         description: |-
           Must contain json record for the upsertenrollment model.
 
@@ -556,9 +557,7 @@ components:
           type: string
         demographics:
           type: object
-        externalid:
-          type: string
-        '':
+        email:
           type: string
       required:
         - firstname
@@ -566,6 +565,7 @@ components:
         - programcode
         - concentrationcode
         - demographics
+        - email
   securitySchemes:
     Basic Auth:
       type: http
