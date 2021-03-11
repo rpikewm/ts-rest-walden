@@ -95,6 +95,8 @@ paths:
         '404':
           description: Not Found
       description: determine if a user exists
+      tags:
+        - Enrollments
   '/api/users/externalId/{external-id}/enrollments':
     parameters:
       - schema:
@@ -400,9 +402,9 @@ paths:
               examples:
                 Key code not specified:
                   value:
-                    'status:-1': null
+                    status: -1
                     msg: Key code not specified for Program Code BS_ED_BAD
-                'Key code not setup ':
+                Key code not setup:
                   value:
                     status: -2
                     msg: 'Key code does not have a targeted node id, please ask Customer Service to fix in SA Green'
@@ -443,7 +445,8 @@ paths:
         required: true
     get:
       summary: Your GET endpoint
-      tags: []
+      tags:
+        - Users
       responses:
         '200':
           description: OK
@@ -536,6 +539,7 @@ components:
     UpsertEnrollment:
       title: UpsertEnrollment
       type: object
+      description: 'Model containing firstname, lastname, programcode, concentrationcode, and a keyvaluepair representation of demographics as an object'
       properties:
         firstname:
           type: string
@@ -547,13 +551,16 @@ components:
           type: string
         demographics:
           type: object
+        externalid:
+          type: string
+        '':
+          type: string
       required:
         - firstname
         - lastname
         - programcode
         - concentrationcode
         - demographics
-      description: 'Model containing firstname, lastname, programcode, concentrationcode, and a keyvaluepair representation of demographics as an object'
   securitySchemes:
     Basic Auth:
       type: http
