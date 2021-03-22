@@ -461,6 +461,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
       operationId: get-users-email-email
+      description: Get the user by email instead of client id
     head:
       summary: Check if a User Exists by email
       operationId: head-users-email-email
@@ -492,6 +493,10 @@ components:
           $ref: '#/components/schemas/Enrollment'
         demographics:
           $ref: '#/components/schemas/Demographics'
+        isactive:
+          type:
+            - string
+            - boolean
       required:
         - external_id
         - first_name
