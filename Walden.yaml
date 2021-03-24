@@ -494,9 +494,7 @@ components:
         demographics:
           $ref: '#/components/schemas/Demographics'
         isactive:
-          type:
-            - string
-            - boolean
+          type: boolean
       required:
         - external_id
         - first_name
